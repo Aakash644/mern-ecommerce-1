@@ -1,0 +1,29 @@
+name: CI/CD pipeline
+
+on: 
+   push:
+   branches:
+     - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Build Backend and Frontend Docker Images
+      - name: Build Docker images
+        run: docker-compose build
+
+      # Test Backend
+      - name: Test Backend
+        run: docker-compose run backend npm test
+
+      # Test Frontend
+      - name: Test Frontend
+        run: docker-compose run frontend npm test
+
+
+       
