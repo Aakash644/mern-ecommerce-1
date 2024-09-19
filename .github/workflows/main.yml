@@ -54,7 +54,7 @@ jobs:
           aws-region: ${{ secrets.region }}
 
       - name: Set up kubectl
-        uses: aws-actions/eksctl-action@v1
+        
         with:
           cluster-name: mern-app
           region: ${{ secrets.REGION }}
