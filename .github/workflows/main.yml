@@ -50,15 +50,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.region }}
 
-      - name: Set up kubectl
-        run : VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt) && \
-               curl -LO "https://dl.k8s.io/release/${VERSION}/bin/darwin/amd64/kubectl" && \
-               chmod +x ./kubectl && \
-               sudo mv ./kubectl /usr/local/bin/kubectl && \
-            
-
-             
-
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v2.0
+        with:
+          version: 'v1.24.0' # default is latest stable
+        id: install
         
           
       - name: Update kubeconfig
