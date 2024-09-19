@@ -38,13 +38,13 @@ const Footer = () => {
                         </div>
                         <ul className="footer__contacts">
                             <li className="footer__contact">
-                                <LocalPhoneIcon /> <span>+123 4567 890</span>
+                                <LocalPhoneIcon /> <span>+91 9311896609</span>
                             </li>
                             <li className="footer__contact">
-                                <EmailIcon /> <span>shop@shema.com</span>
+                                <EmailIcon /> <span>aakshkr10@gmail.com</span>
                             </li>
                             <li className="footer__contact">
-                                <LocationOnIcon /> <span>Addis Ababa, Ethiopia</span>
+                                <LocationOnIcon /> <span>Delhi, india</span>
                             </li>
                         </ul>
                     </div>
