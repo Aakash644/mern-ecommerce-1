@@ -63,6 +63,12 @@ jobs:
       - name: Update kubeconfig
         run: aws eks update-kubeconfig --region ${{ secrets.region }} --name mern-app
 
+      - name: Update YAML with Docker Username and Mongo URI
+        run: |
+         sed -i 's|DOCKER_USERNAME|${{ secrets.DOCKER_USERNAME }}|g' mern-backend.yml
+         sed -i 's|DOCKER_USERNAME|${{ secrets.DOCKER_USERNAME }}|g' mern-frontend.yml
+         sed -i 's|MONGO_URI|${{ secrets.MONGO_URI }}|g' mern-backend.yml
+
       - name: Deploy to EKS
         run: |
           kubectl set image deployment/mern-backend mern-backend=${{ secrets.DOCKER_USERNAME }}/mern-backend:latest
