@@ -54,10 +54,12 @@ jobs:
           aws-region: ${{ secrets.region }}
 
       - name: Set up kubectl
+        run : curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl"
+              chmod +x ./kubectl
+               sudo mv ./kubectl /usr/local/bin/kubectl
+              kubectl version --client
+
         
-        with:
-          cluster-name: mern-app
-          region: ${{ secrets.REGION }}
           
       - name: Update kubeconfig
         run: aws eks update-kubeconfig --region ${{ secrets.region }} --name mern-app
