@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
       - name: mern-backend
-        image: ${{ secrets.DOCKER_USERNAME }}/mern-backend:latest
+        image: DOCKER_USERNAME/mern-backend:latest
         ports:
         - containerPort: 5000
         env:
         - name: MONGODB_URI
-          value: ${{secrets.MONGO_URI}}
+          value: MONGO_URI
        
 ---
 apiVersion: v1
