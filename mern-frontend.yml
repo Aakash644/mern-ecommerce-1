@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mern-frontend
-        image: ${{ secrets.DOCKER_USERNAME }}/mern-frontend:latest
+        image: DOCKER_USERNAME/mern-frontend:latest
         ports:
         - containerPort: 3000
 ---
