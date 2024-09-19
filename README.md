@@ -6,7 +6,7 @@
 
 Full-stack ecommerce application built with MERN stack. This project has two features:
 
-1. Buyers register and browse the marketplace while interacting with products across different categories.
+1. Buyers register and browse the market-place while interacting with products across different categories.
 2. Admins control and manage the marketplace items and customer accounts.
 
 # Getting Started
