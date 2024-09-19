@@ -20,23 +20,52 @@ jobs:
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
+        
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Install Docker Compose
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build backend Docker image
         run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/mern-backend:latest -f server/Dockerfile
 
-      # Build Backend and Frontend Docker Images
-      - name: Build Docker images
-        run: docker-compose build
+      - name: Build Frontend Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/mern-frontend:latest -f client/Dockerfile
 
-      # Test Backend
-      - name: Test Backend
-        run: docker-compose run backend npm test
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/mern-backend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/mern-frontend:latest
+          
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-      # Test Frontend
-      - name: Test Frontend
-        run: docker-compose run frontend npm test
+      - name: Set up kubectl
+        uses: aws-actions/eksctl-action@v1
+        with:
+          cluster-name: mern-app
+          region: ${{ secrets.region }}
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --region ${{ secrets.region }} --name mern-app
 
+      - name: Deploy to EKS
+        run: |
+          kubectl set image deployment/mern-backend mern-backend=${{ secrets.DOCKER_USERNAME }}/mern-backend:latest
+          kubectl set image deployment/mern-frontend mern-frontend=${{ secrets.DOCKER_USERNAME }}/mern-frontend:latest
+          kubectl rollout status deployment/mern-backend
+          kubectl rollout status deployment/mern-frontend
+          
 
-       
