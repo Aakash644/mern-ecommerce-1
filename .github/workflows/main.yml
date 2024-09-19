@@ -71,8 +71,6 @@ jobs:
 
       - name: Deploy to EKS
         run: |
-          kubectl set image deployment/mern-backend mern-backend=${{ secrets.DOCKER_USERNAME }}/mern-backend:latest
-          kubectl set image deployment/mern-frontend mern-frontend=${{ secrets.DOCKER_USERNAME }}/mern-frontend:latest
           kubectl apply -f mern-backend.yml
           kubectl apply -f mern-frontend.yml
           
