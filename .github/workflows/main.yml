@@ -70,7 +70,7 @@ jobs:
         run: |
           kubectl set image deployment/mern-backend mern-backend=${{ secrets.DOCKER_USERNAME }}/mern-backend:latest
           kubectl set image deployment/mern-frontend mern-frontend=${{ secrets.DOCKER_USERNAME }}/mern-frontend:latest
-          kubectl rollout status deployment/mern-backend
-          kubectl rollout status deployment/mern-frontend
+          kubectl apply mern-backend.yml
+          kubectl apply -f mern-frontend.yml
           
 
