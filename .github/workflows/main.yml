@@ -73,5 +73,7 @@ jobs:
         run: |
           kubectl apply -f mern-backend.yml
           kubectl apply -f mern-frontend.yml
+          kubectl rollout restart deployment/mern-backend
+          kubectl rollout restart deployment/mern-frontend
           
 
