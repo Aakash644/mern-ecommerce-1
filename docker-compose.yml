@@ -17,8 +17,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - MONGO_URI=mongodb+srv://aakshkr:*Aakash94707#@cluster0.xxxxx.mongodb.net/ecommerce?retryWrites=true&w=majority
-    volumes:
+      - MONGO_URI= {{ MONGO_URI }}
       - ./server:/app
 
   frontend:
