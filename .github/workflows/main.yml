@@ -61,7 +61,7 @@ jobs:
         
           
       - name: Update kubeconfig
-        run: aws eks update-kubeconfig --region ${{ secrets.region }} --name mern-app
+        run: aws eks update-kubeconfig --region ${{ secrets.region }} --name mern-app-1
 
       - name: Update YAML with Docker Username and Mongo URI
         run: |
